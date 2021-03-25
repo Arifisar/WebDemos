@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+  <meta charset="utf-8">
+
+  <title>vue-todoList-demo</title>
+
+  <!-- Behavioral Meta Data -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+</head>
+
+<body>
+  <section id="todo-list-app">
+    <header>
+      <div class="title">
+        TODOLIST :3.0+1.0
+      </div>
+    </header>
+    <section class="main">
+      <section class="input">
+        <input type="text" name="" id="" placeholder="请输入要执行的任务" class="todo-input" v-model="inputValue"
+          @keyup.enter="addList">
+        <transition name="addBtn">
+          <button class="add-button" v-show="inputValue!=false" @click="addList">添加任务</button>
+        </transition>
+      </section>
+      <ul class="todo-list" type='none'>
+        <transition-group name="list">
+          <li class="list" v-for="(item,index) in list" :key="item">
+            <div class="view">
+              <span class="list-index">{{index+1}}.</span>
+              <label :for="item" style="padding-left: 10px;cursor: text;line-height: 24px;">{{item}}</label>
+              <div class="close" @click="deleteList(index)"></div>
+              <!-- <button class="item-remove-button" @click="deleteList(index)">删除</button> -->
+            </div>
+          </li>
+        </transition-group>
+      </ul>
+      <footer class="list-info" v-show="list.length!=0">
+        <span class="list-count">共 {{list.length}} 项任务</span>
+        <span class="clear" @click="clearAll">Clear All</span>
+      </footer>
+    </section>
+  </section>
+  <footer class="footer-logo">
+    <a href="https://www.evangelion.co.jp/">
+      <img src="./assets/images/common/nerv-logo.png" alt="" width="100">
+    </a>
+  </footer>
+
+</body>
+
+<script>
+  const app = new Vue({
+    el: '#todo-list-app',
+    data: {
+      list: ['上学', '同步率测试', '和司令还有大家聚餐'],
+      inputValue: ''
+    },
+    methods: {
+      addList() {
+        this.list.push(this.inputValue);
+        this.inputValue = '';
+      },
+      deleteList(index) {
+        this.list.splice(index, 1);
+        // console.log(index);
+      },
+      clearAll() {
+        if (confirm('确定清除所有任务？')) {
+          this.list = [];
+        } else {
+          return
+        }
+      }
+    },
+  })
+
+</script>
+<style>
+  :root {
+    --transanime: all cubic-bezier(0.22, 0.61, 0.36, 1) 300ms;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #F8F8F8;
+    /* overflow-y: scroll;*/
+     width: calc(100vw - 17px);
+  }
+
+  .input {
+    display: flex;
+    align-items: center;
+  }
+
+  .add-button {
+    position: absolute;
+    height: 22px;
+    width: 80px;
+    font-size: 12px;
+    right: 11px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    transition: var(--transanime);
+  }
+
+  .add-button:hover {
+    cursor: pointer;
+    background-color: #FA0026;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px #FA002688;
+  }
+
+  /* vue自带的transition标签可以为条件渲染写过渡动画 */
+  /* 定义进入前与离开后状态 */
+  .addBtn-enter,
+  .addBtn-leave-to {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+
+  /* 定义进出过程 */
+  .addBtn-enter-active,
+  .addBtn-leave-active {
+    transition: var(--transanime);
+  }
+
+  ul {
+    padding-left: 0;
+  }
+
+  li {
+    margin: 10px 0;
+    /* height: 44px; */
+    padding: 10px 60px 10px 20px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    /* width: 400px; */
+    border-radius: 22px;
+    color: #333;
+
+    word-break: break-all;
+    word-wrap: break-word;
+
+    transition: var(--transanime);
+  }
+
+  ::-webkit-input-placeholder {
+    color: #ddd;
+  }
+
+
+  .title {
+    color: #FA0026;
+    font-size: 50px;
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+    font-family: 'Dosis';
+  }
+
+  .main {
+    width: 600px;
+    position: relative;
+    margin: auto;
+  }
+
+  .list-info {
+    width: 600px;
+    height: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+
+  .list-count {
+    margin-left: 20px;
+  }
+
+  .clear {
+    position: absolute;
+    right: 20px;
+    transition: var(--transanime);
+  }
+
+  .clear:hover {
+    cursor: pointer;
+    color: #FA0026;
+  }
+
+
+  .footer-logo {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 0;
+  }
+
+  .todo-input {
+    width: 600px;
+    border: none;
+    outline: none;
+    height: 44px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    transition: var(--transanime);
+  }
+
+  .todo-input:focus {
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .item-remove-button {
+    width: 44px;
+    height: 20px;
+    border-radius: 10px;
+    font-size: 12px;
+    /* vertical-align: center; */
+    border: none;
+    outline: none;
+    /* margin-left: auto; */
+    position: absolute;
+    right: 10px;
+    /* opacity: 0; */
+    transition: var(--transanime);
+  }
+
+  .item-remove-button:hover {
+    background-color: #FA0026;
+    color: #fff;
+  }
+
+  li:hover .item-remove-button {
+    opacity: 1;
+  }
+
+  .view {
+    display: flex;
+    align-items: center;
+  }
+
+  .close {
+    position: absolute;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    display: inline-flex;
+    /* background-color: red; */
+    opacity: 0;
+    transition: var(--transanime);
+
+  }
+
+  .close:hover {
+    cursor: pointer;
+  }
+
+  li:hover .close {
+    opacity: 1;
+  }
+
+  .close:before,
+  .close:after {
+    position: absolute;
+    top: 28%;
+    left: 46%;
+    content: ' ';
+    height: 12px;
+    width: 2px;
+    background-color: #666;
+    transition: var(--transanime);
+    transform: translate(-50%, -50%);
+  }
+
+  .close:hover::before,
+  .close:hover::after {
+
+    background-color: #FA0026;
+    transition: var(--transanime);
+  }
+
+
+  .close:before {
+    transform: rotate(45deg);
+  }
+
+  .close:after {
+    transform: rotate(-45deg);
+  }
+
+  /* vue自带的transition标签可以为条件渲染写过渡动画 */
+  /* 定义进入前与离开后状态 */
+  .list-enter,
+  .list-leave-to {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+
+  /* 定义离开前与进入后状态 */
+  .list-leave,
+  .list-to {
+    opacity: 1;
+    transform: translateY(-30px);
+  }
+
+  /* 定义进出过程 */
+  .list-enter-active,
+  .list-leave-active {
+    transition: var(--transanime);
+  }
+
+  /* 填充动画必须声明的两项 */
+  .list-move {
+    transition: var(--transanime);
+  }
+
+  .list-leave-active {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+</style>
