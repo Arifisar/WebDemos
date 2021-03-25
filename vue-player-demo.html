@@ -32,7 +32,7 @@
             </div>
           </div>
           <p class="name">{{musicName}}</p>
-          <p class="album-name">{{musicAblumName}}</p>
+          <p class="album-name">「{{musicAblumName}}」</p>
           <p class="artist">{{musicArtist}}</p>
           <div class="comment" :class="{up:isUp,down:isDown}">
             <div class="upbtn-area">
@@ -59,7 +59,7 @@
         <div class="right-body">
           <ul type="none">
             <transition-group name="list">
-              <li class="music-list" v-for="(item,index) in musicList" :key="index">
+              <li class="music-list" v-for="(item,index) in musicList" :key="index" @dblclick="playMusic(item.id)">
                 <div class="btn-area">
                   <div class="play-button" @click="playMusic(item.id)">
                   </div>
@@ -284,6 +284,7 @@
     text-align: center;
     padding: 0 10px;
     box-sizing: border-box;
+    margin: 10px 0;
   }
 
   .album-name {
@@ -292,6 +293,7 @@
     color: #999;
     margin-top: 10px;
     margin-bottom: 0;
+
   }
 
   .artist {
@@ -311,6 +313,15 @@
     padding: 10px;
     box-sizing: border-box;
     box-shadow: 0 5px 10px #13a0dd33;
+  }
+
+  .name,
+  .album-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
   }
 
   .playing {
@@ -445,13 +456,19 @@
   li {
     height: 22px;
     margin: 10px 0;
+    user-select: none;
   }
 
   li:nth-child(odd) {
     background-color: #f5f7fa;
   }
 
+  li:hover {
+    background-color: #eef1f3;
+  }
+
   .music-list {
+    cursor: default;
     display: flex;
     padding-left: 10px;
     background-color: #fff;
@@ -475,7 +492,14 @@
     width: 18px;
     background-color: #11A2DE;
     border-radius: 50%;
+    transition: all 300ms;
   }
+
+  .play-button:hover {
+    box-shadow: 0 2px 4px #11a2de88;
+    transform: translateY(-1px);
+  }
+
 
 
 
