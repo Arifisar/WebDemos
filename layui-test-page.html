@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>layui-test-page</title>
+  <link rel="stylesheet" href="//unpkg.com/layui@2.6.4/dist/css/layui.css">
+  <script src="//unpkg.com/layui@2.6.4/dist/layui.js"></script>
+</head>
+
+<body>
+  <div class="layui-container">
+    <!-- <form action="" class="layui-form"></form> -->
+    <ul class="layui-nav" lay-shrink="all">
+      <li class="layui-nav-item" lay-unselect><a href="">导航选项卡1
+          <span class="layui-badge">99+</span></a></li>
+      <li class="layui-nav-item"><a href="">导航选项卡2</a></li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">导航选项卡3</a>
+        <dl class="layui-nav-child">
+          <dd><a href="">aaa</a></dd>
+          <dd><a href="">bbb</a></dd>
+          <dd><a href="">ccc</a></dd>
+          <dd><a href="">ddd</a></dd>
+        </dl>
+      </li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">导航选项卡4</a>
+        <dl class="layui-nav-child">
+          <dd><a href="">aaa</a></dd>
+          <dd><a href="">bbb</a></dd>
+          <dd><a href="">ccc</a></dd>
+          <dd><a href="">ddd</a></dd>
+        </dl>
+      </li>
+    </ul>
+    <br />
+
+    <span class="layui-breadcrumb" lay-separator="-">
+      <a href="">1111</a>
+      <a href="">22222</a>
+      <a href="">333</a>
+      <a href=""><cite>4444</cite></a>
+    </span>
+    <br />
+
+    <div class="layui-panel">
+      <ul class="layui-menu">
+        <li>111</li>
+        <li>222</li>
+        <li class="layui-menu-item-divider"></li>
+        <li>333</li>
+        <li>444</li>
+        <li class="layui-menu-item-parent ">
+          <div class="layui-menu-body-title">
+            555 <i class="layui-icon layui-icon-right"></i>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+
+</html>
+<script>
+  layui.use(["layer", 'element'], () => {
+    this.layer = layui.layer,
+      this.element = layui.element;
+    // layer.msg("hello")
+  })
+</script>
+<style>
+  .layui-panel {
+    width: 100px;
+  }
+
+  .div01 {
+    height: 100px;
+    width: 100px;
+    background-color: red;
+    margin: auto;
+  }
+
+  .layui-nav-item {
+    margin-right: 20px;
+  }
+</style>
